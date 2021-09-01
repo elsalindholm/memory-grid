@@ -1,9 +1,14 @@
 import { action, observable } from 'mobx';
 
-export class AppState {
-  @observable public count = 0;
+export enum Screen {
+  START = 'start',
+  GAME = 'game',
+}
 
-  @action incCount() {
-    this.count++;
+export class AppState {
+  @observable public currentScreen: Screen = Screen.START;
+
+  @action setScreen(page: Screen) {
+    this.currentScreen = page;
   }
 }
