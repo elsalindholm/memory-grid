@@ -19,6 +19,6 @@ export class App extends React.PureComponent {
         break;
     }
 
-    return <div>{page}</div>;
+    return <div id={'app-root'}>{page}</div>;
   }
 }

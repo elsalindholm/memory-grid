@@ -1,4 +1,5 @@
 import { action, observable } from 'mobx';
+import { GameState } from './GameState';
 
 export enum Screen {
   START = 'start',
@@ -6,7 +7,9 @@ export enum Screen {
 }
 
 export class AppState {
-  @observable public currentScreen: Screen = Screen.START;
+  public readonly gameState = new GameState();
+
+  @observable public currentScreen: Screen = Screen.GAME;
 
   @action setScreen(page: Screen) {
     this.currentScreen = page;
