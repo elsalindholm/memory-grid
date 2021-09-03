@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { GameState } from '../GameState';
+import { GameState, SquareItem } from '../GameState';
 
 import './game-grid.scss';
+import { GameSquare } from './GameSquare';
 
 interface GameGridProps {
   gameState: GameState;
@@ -17,6 +18,18 @@ export class GameGrid extends React.PureComponent<GameGridProps> {
       gridTemplateRows: `repeat(${gameState.gridSize}, 40px)`,
     };
 
-    return <div className={'game-grid'} style={gridStyle}></div>;
+    return (
+      <div className={'game-grid'} style={gridStyle}>
+        {this.renderSquares()}
+      </div>
+    );
+  }
+
+  private renderSquares() {
+    const { gameState } = this.props;
+
+    return gameState.squares.map((square: SquareItem, i: number) => (
+      <GameSquare key={'gs-' + i} square={square} />
+    ));
   }
 }

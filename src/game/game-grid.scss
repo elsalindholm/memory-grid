@@ -1,11 +1,12 @@
 .game-grid {
   width: auto;
   height: auto;
+  padding: 5px;
 
   border: 1px solid black;
 
   display: grid;
 
-  grid-row-gap: 5px;
-  grid-column-gap: 5px;
+  grid-gap: 5px;
+  grid-auto-flow: row;
 }
