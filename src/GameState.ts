@@ -12,7 +12,9 @@ export class GameState {
 
   @observable public gridSize: number = 4;
   @observable public noOfSquares: number;
+  @observable public noOfHighlightedSquares: number;
   @observable public squares: SquareItem[] = [];
+  @observable public highlightedSquares: SquareItem[] = [];
 
   constructor() {
     this.setGridSize();
@@ -35,5 +37,26 @@ export class GameState {
       };
       this.squares.push(square);
     }
+  }
+
+  @action setNoOfHighlightedSquares() {
+    const baseNo = 3;
+    this.noOfHighlightedSquares = baseNo + this.currentLevel - 1;
+  }
+
+  @action chooseHighlightedSquares() {
+    const allSquares = [...this.squares];
+    const toBeHighlighted: SquareItem[] = [];
+
+    for (let i = 0; i < this.noOfHighlightedSquares; i++) {
+      let index = Math.floor(Math.random() * this.noOfSquares - 1);
+      toBeHighlighted.push(allSquares[index]);
+    }
+
+    this.highlightedSquares = toBeHighlighted;
+  }
+
+  @action highlightSquares() {
+    this.highlightedSquares.forEach((square) => (square.highlighted = true));
   }
 }
