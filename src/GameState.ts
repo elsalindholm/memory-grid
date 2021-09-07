@@ -1,5 +1,11 @@
 import { action, observable } from 'mobx';
 
+export enum GameStage {
+  COUNTDOWN = 'countdown',
+  HIGHLIGHT = 'highlight',
+  ANSWER = 'answer',
+}
+
 export interface SquareItem {
   id: number;
   highlighted: boolean;
@@ -17,7 +23,13 @@ export class GameState {
   @observable public highlightedSquares: SquareItem[] = [];
 
   constructor() {
+    this.setUpGame();
+  }
+
+  @action setUpGame() {
     this.setGridSize();
+    this.createSquares();
+    this.setNoOfHighlightedSquares();
   }
 
   @action setGridSize() {
@@ -27,6 +39,11 @@ export class GameState {
 
     this.gridSize = baseGrid + rowAndColumAdditions;
     this.noOfSquares = this.gridSize * this.gridSize;
+  }
+
+  @action setNoOfHighlightedSquares() {
+    const baseNo = 3;
+    this.noOfHighlightedSquares = baseNo + this.currentLevel - 1;
   }
 
   @action createSquares() {
@@ -39,11 +56,6 @@ export class GameState {
     }
   }
 
-  @action setNoOfHighlightedSquares() {
-    const baseNo = 3;
-    this.noOfHighlightedSquares = baseNo + this.currentLevel - 1;
-  }
-
   @action chooseHighlightedSquares() {
     const allSquares = [...this.squares];
     const toBeHighlighted: SquareItem[] = [];
@@ -54,9 +66,5 @@ export class GameState {
     }
 
     this.highlightedSquares = toBeHighlighted;
-  }
-
-  @action highlightSquares() {
-    this.highlightedSquares.forEach((square) => (square.highlighted = true));
   }
 }
